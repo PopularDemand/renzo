@@ -1,28 +1,24 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { Earth } from '../svg';
+import { StackNavigator } from 'react-navigation';
+import { Constants } from 'expo';
+
+import { HomeScreen } from '../components/screens/home';
+import { GameScreen } from '../components/screens/game';
+
+const Routes = StackNavigator({
+  Home: { screen: HomeScreen },
+  Game: { screen: GameScreen }
+}, {
+  navigationOptions: {
+    headerStyle: { marginTop: Constants.statusBarHeight }
+  }
+});
 
 export default class App extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text style={styles.header}>RenZo</Text>
-        <Earth fill="blue" />
-        <Text style={{ color: '#ccc', position: 'absolute', bottom: 20 }}>Shake your phone to open the developer menu.</Text>
-      </View>
+      <Routes />
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  header: {
-    fontSize: 32,
-    letterSpacing: .5
-  }
-});
