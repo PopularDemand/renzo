@@ -9,8 +9,9 @@ const Routes = StackNavigator({
   Home: { screen: HomeScreen },
   Game: { screen: GameScreen }
 }, {
+  headerMode: 'screen',
   navigationOptions: {
-    headerStyle: { marginTop: Constants.statusBarHeight }
+    headerStyle: { marginTop: Constants.statusBarHeight },
   }
 });
 

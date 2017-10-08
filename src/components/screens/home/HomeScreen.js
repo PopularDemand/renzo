@@ -1,24 +1,26 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
+import { Rotate } from '../../core/transforms';
 import { Earth } from '../../svg';
 
 export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
         <Text style={styles.header}>RenZo</Text>
-        <Earth fill="blue" />
+        <Rotate>
+          <Earth fill="blue" style={styles.icon} />
+        </Rotate>
         <Button
-          title="Sign in"
+          title="Play Now"
           onPress={() => navigation.navigate('Game')}
         />
-        <Text style={{ color: '#ccc', position: 'absolute', bottom: 20 }}>
-          Shake your phone to open the developer menu.
-        </Text>
       </View>
   );
 }
 
-HomeScreen.navigationOptions = { title: 'Home' };
+HomeScreen.navigationOptions = { header: null };
+
+const spacing = 20;
 
 const styles = StyleSheet.create({
   container: {
@@ -29,6 +31,10 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 32,
-    letterSpacing: .5
+    letterSpacing: .5,
+    marginBottom: spacing
+  },
+  icon: {
+    marginBottom: spacing
   }
 });
