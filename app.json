@@ -1,5 +1,10 @@
 {
   "expo": {
-    "sdkVersion": "21.0.0"
+    "sdkVersion": "21.0.0",
+    "name": "RenZo",
+    "slug": "renzo",
+    "privacy": "public",
+    "description": "Do you know the right choice?",
+    "icon": "./assets/fire.png"
   }
 }
