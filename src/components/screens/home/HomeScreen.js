@@ -7,19 +7,6 @@ import { getHomepage } from '../../../lib/pages/api';
 // TODO: move to authScreen
 import { signUp, signOut } from '../../../lib/users/api';
 
-let i = 10;
-const customSignUp = () => {
-  signUp(JSON.stringify({
-    user: {
-      username: `test${i}`,
-      password: 'password',
-      password_confirmation: 'password',
-      email: `test${i}@test.com`
-    }
-  }));
-  i++;
-}
-
 export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
@@ -33,11 +20,7 @@ export default function HomeScreen({ navigation }) {
         />
         <Button
           title="sign in"
-          onPress={customSignUp}
-        />
-        <Button
-          title="sign out"
-          onPress={signOut}
+          onPress={() => navigation.navigate('Auth')}
         />
       </View>
   );
