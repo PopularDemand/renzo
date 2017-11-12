@@ -2,58 +2,22 @@ import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import { Rotate } from '../../core/transforms';
 import { Earth } from '../../svg';
+import { getHomepage } from '../../../lib/pages/api';
 
-async function signUp() {
-  try {
-    const body = JSON.stringify({
-      user: {
-        username: 'alexayay',
-        password: 'password',
-        password_confirmation: 'password',
-        email: 'wgpuck@yahoo.com'
-      }
-    });
-    const headers = new Headers();
-    headers.append('Accept', 'application/json');
-    headers.append('Content-Type', 'application/json');
+// TODO: move to authScreen
+import { signUp, signOut } from '../../../lib/users/api';
 
-    const res = await fetch('https://zo-serve.herokuapp.com/users', {
-      method: 'POST',
-      headers,
-      body
-    });
-    const currentUser = await res.json();
-    console.log(currentUser);
-  } catch (error) {
-    console.error('error: ', error);
-  }
-}
-
-async function signOut() {
-  try {
-    const headers = new Headers();
-    headers.append('Accept', 'application/json');
-    headers.append('Content-Type', 'application/json');
-
-    const res = await fetch('https://zo-serve.herokuapp.com/signout', {
-      method: 'DELETE',
-      headers
-    });
-    const currentUser = await res.json();
-    console.log(currentUser);
-  } catch (error) {
-    console.error('error: ', error);
-  }
-}
-
-async function getUsers() {
-  try {
-    const res = await fetch('https://zo-serve.herokuapp.com/users');
-    const users = await res.json();
-    console.log(users);
-  } catch (error) {
-    console.log('error: ', error);
-  }
+let i = 10;
+const customSignUp = () => {
+  signUp(JSON.stringify({
+    user: {
+      username: `test${i}`,
+      password: 'password',
+      password_confirmation: 'password',
+      email: `test${i}@test.com`
+    }
+  }));
+  i++;
 }
 
 export default function HomeScreen({ navigation }) {
@@ -69,7 +33,7 @@ export default function HomeScreen({ navigation }) {
         />
         <Button
           title="sign in"
-          onPress={signUp}
+          onPress={customSignUp}
         />
         <Button
           title="sign out"
