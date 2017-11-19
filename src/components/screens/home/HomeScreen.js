@@ -22,6 +22,10 @@ export default function HomeScreen({ navigation }) {
           title="sign in"
           onPress={() => navigation.navigate('Auth')}
         />
+        <Button
+          title="sign out"
+          onPress={signOut}
+        />
       </View>
   );
 }

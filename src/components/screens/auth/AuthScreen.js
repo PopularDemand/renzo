@@ -2,12 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, View, Button } from 'react-native';
 import { SignUpForm } from '../../forms';
-// import * as authActions from '../../../store/auth/actions';
-const authActions = {};
-authActions.authSignUp = (userParams) => ({
-  type: 'AUTH_SIGN_UP',
-  body: userParams
-})
+import { authSignUp } from '../../../store/auth/actions';
 
 export function AuthScreen({ navigation, handleSignUp, form }) {
   return (
@@ -17,19 +12,14 @@ export function AuthScreen({ navigation, handleSignUp, form }) {
   );
 }
 
-const mapStateToProps = (state) => ({
-  form: state.form
-});
-
 const mapDispatchToProps = (dispatch) => ({
   handleSignUp: (userParams) => {
-    console.log(userParams);
-    dispatch(authActions.authSignUp(userParams));
+    dispatch(authSignUp(userParams));
   }
-})
+});
 
 export default connect(
-  mapStateToProps,
+  ({ form }) => form,
   mapDispatchToProps
 )(AuthScreen);
 
