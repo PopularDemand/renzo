@@ -1,25 +1,12 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { View, Button, StyleSheet, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Button, StyleSheet, Text, TouchableOpacity, ScrollView } from 'react-native';
+import { LoadingSpinner } from '../core/loading';
+import FormInput from './FormInput';
 
-const FormInput = ({ input, ...inputProps }) => {
+export const SignUpForm = ({ handleSubmit, auth }) => {
   return (
-    <View>
-      <TextInput
-        {...inputProps}
-        onChangeText={input.onChange}
-        onBlur={input.onBlur}
-        onFocus={input.onFocus}
-        value={input.value}
-      />
-    </View>
-  );
-};
-
-
-export const SignUpForm = ({ handleSubmit }) => {
-  return (
-    <ScrollView keyboardShouldPersistTaps={'handled'}>
+    <ScrollView keyboardShouldPersistTaps={'handled'} contentContainerStyle={styles.container}>
       <View className="form-group">
         <Text>Username</Text>
         <Field name="user[username]" component={FormInput} />
@@ -39,6 +26,7 @@ export const SignUpForm = ({ handleSubmit }) => {
       <TouchableOpacity onPress={handleSubmit}>
         <Text>Submit!</Text>
       </TouchableOpacity>
+      <LoadingSpinner isLoading={auth.isLoading} />
     </ScrollView>
   );
 }
