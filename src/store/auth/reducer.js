@@ -25,7 +25,6 @@ export default function(state, action) {
       };
 
     case AUTH_TYPES.SIGN_UP_FAILURE:
-      console.log('now look: ', action)
       return {
         ...initialState,
         error: action.body,

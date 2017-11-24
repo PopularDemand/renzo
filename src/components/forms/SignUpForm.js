@@ -3,10 +3,12 @@ import { Field, reduxForm } from 'redux-form';
 import { View, Button, StyleSheet, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { LoadingSpinner } from '../core/loading';
 import FormInput from './FormInput';
+import FormError from './FormError';
 
 export const SignUpForm = ({ handleSubmit, auth }) => {
   return (
     <ScrollView keyboardShouldPersistTaps={'handled'} contentContainerStyle={styles.container}>
+      <FormError message={auth.error} />
       <View className="form-group">
         <Text>Username</Text>
         <Field name="user[username]" component={FormInput} />

@@ -15,7 +15,7 @@ export function authSignUp(userParams) {
       return user;
     }
     function onError(error) {
-      dispatch(authSignUpFailure(error));
+      dispatch(authSignUpFailure(error.message));
       return error;
     }
 
@@ -23,7 +23,7 @@ export function authSignUp(userParams) {
       const user = await signUp(userParams);
       if (user.error) {
         // TODO: change server to return more than string
-        // or make standard funciton to handle res/errors
+        // or make standard function to handle res/errors
         // from this server
         return onError(new Error(user.error));
       }
