@@ -1,52 +1,50 @@
 import React from 'react';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { connect } from 'react-redux';
+import { Text, View, Button } from 'react-native';
 import { Rotate } from '../../core/transforms';
 import { Earth } from '../../svg';
 import { getHomepage } from '../../../lib/pages/api';
 
-// TODO: move to authScreen
-import { signUp, signOut } from '../../../lib/users/api';
+import styles from './styles';
 
-export default function HomeScreen({ navigation }) {
+// TODO: move to authScreen
+import { authSignOut } from '../../../store/auth/actions';
+
+export function HomeScreen({ navigation, auth, handleSignOut }) {
   return (
     <View style={styles.container}>
         <Text style={styles.header}>RenZo</Text>
         <Rotate>
           <Earth fill="blue" style={styles.icon} />
         </Rotate>
+        {auth.username &&
+          <Text>The current user is {auth.username}</Text>
+        }
         <Button
           title="Play Now"
           onPress={() => navigation.navigate('Game')}
         />
         <Button
-          title="sign in"
+          title="sign up"
           onPress={() => navigation.navigate('Auth')}
         />
         <Button
           title="sign out"
-          onPress={signOut}
+          onPress={handleSignOut}
         />
       </View>
   );
 }
 
-HomeScreen.navigationOptions = { header: null };
-
-const spacing = 20;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  header: {
-    fontSize: 32,
-    letterSpacing: .5,
-    marginBottom: spacing
-  },
-  icon: {
-    marginBottom: spacing
+const mapDispatchToProps = (dispatch) => ({
+  handleSignOut: () => {
+    dispatch(authSignOut());
   }
 });
+
+HomeScreen.navigationOptions = { header: null };
+
+export default connect(
+  ({ auth }) => ({ auth }),
+  mapDispatchToProps
+)(HomeScreen)

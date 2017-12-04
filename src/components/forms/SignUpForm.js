@@ -1,5 +1,6 @@
 import React from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { withHandlers } from 'recompose';
 import { View, Button, StyleSheet, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { LoadingSpinner } from '../core/loading';
 import FormInput from './FormInput';
