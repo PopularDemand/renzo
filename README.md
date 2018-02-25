@@ -1,4 +1,4 @@
-*Then I look at you, and the world's alright with me.* - Bill Withers
+# RENZO
 
 To run the application in development environment:
 
@@ -11,3 +11,5 @@ To run the application in development environment:
 1. `yarn install`
 1. `yarn start`
 1. Open the Expo app on your device and scan the QR code that appears in your terminal
+
+:notes: *Then I look at you, and the world's alright with me.* - Bill Withers, *Lovely Day*

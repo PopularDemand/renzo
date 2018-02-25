@@ -3,11 +3,12 @@
 // Look into where to inject the cable
 export function AppearanceChannelSubscription(cable) {
   this.cable = cable;
-  this.channel;
 
   this.subscribe = function() {
     this.channel = cable.subscriptions.create(
       { channel: 'RoomChannel' }, // Name of channel class
+
+      // `this` is the AppearanceChannelSubscription
       {
         // Default actioncable callbacks
         connected: () => {
@@ -21,7 +22,7 @@ export function AppearanceChannelSubscription(cable) {
         rejected: () => console.log('rejected'),
 
         // Custom callbacks defined on channel class
-        echo: (msg) => this.channel.perform('echo', msg)
+        echo: (data) => this.channel.perform('echo', data)
       }
     );
   }
