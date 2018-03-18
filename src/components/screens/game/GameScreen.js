@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import { compose, withStateHandlers, withHandlers, withPropsOnChange } from 'recompose';
+import { withGameChannel } from '../../decorators/withGameChannel';
 import { Rotate } from '../../core/transforms';
 import {
   AidKit,
@@ -26,7 +27,9 @@ const SVGs = [
   SadFace
 ];
 
-const randomIcons = (num) => {
+const NUM_ICONS = 4;
+
+const randomIcons = (num = NUM_ICONS) => {
   const icons = [];
   while (icons.length < num) {
     const index = Math.floor(Math.random() * SVGs.length);
@@ -37,12 +40,13 @@ const randomIcons = (num) => {
 };
 
 export const enhance = compose(
+  withGameChannel,
   withStateHandlers(
-    { icons: randomIcons(4), displayedIcon: Math.floor(Math.random() * 4) },
+    { icons: randomIcons(), displayedIcon: Math.floor(Math.random() * NUM_ICONS) },
     {
       resetIcons: (state, props) => () => ({
-        icons: randomIcons(4),
-        displayedIcon: Math.min(Math.random() * 4)
+        icons: randomIcons(),
+        displayedIcon: Math.floor(Math.random() * NUM_ICONS)
       })
     }
   ),

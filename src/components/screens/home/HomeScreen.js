@@ -6,9 +6,6 @@ import { Rotate } from '../../core/transforms';
 import { Earth } from '../../svg';
 import { getHomepage } from '../../../lib/pages/api';
 
-// TODO: This is for learning/review
-import { AppearanceChannelSubscription } from '../../../lib/sockets/api';
-
 import styles from './styles';
 
 // TODO: move to authScreen
@@ -24,16 +21,7 @@ const enhance = compose(
   connect(
     ({ auth }) => ({ auth }),
     mapDispatchToProps
-  ),
-  lifecycle({
-    componentDidMount() {
-      const appearancesChannel = new AppearanceChannelSubscription(
-        this.props.screenProps.cable
-      );
-
-      appearancesChannel.subscribe();
-    }
-  })
+  )
 );
 
 export function HomeScreen({ navigation, auth, handleSignOut }) {

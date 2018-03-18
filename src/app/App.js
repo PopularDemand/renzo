@@ -1,7 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import ActionCable from 'react-native-actioncable';
-// import ActionCableProvider from 'react-actioncable-provider';
 import { StackNavigator } from 'react-navigation';
 import { Constants } from 'expo';
 
@@ -21,10 +20,9 @@ const Routes = StackNavigator({
   }
 });
 
-// const cable = ActionCable.createConsumer('wss://localhost:3000/cable');
-const cable = ActionCable.createConsumer('wss://actioncableex.herokuapp.com/cable');
+const cable = ActionCable.createConsumer('ws://zo-serve.herokuapp.com/cable');
 
-// Addtional props passed to every screen as this.props.screenProps
+// Additional props passed to every screen as this.props.screenProps
 const screenProps = { cable };
 
 export default class App extends React.Component {
