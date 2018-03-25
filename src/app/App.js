@@ -21,6 +21,7 @@ const Routes = StackNavigator({
 });
 
 const cable = ActionCable.createConsumer('ws://zo-serve.herokuapp.com/cable');
+cable.dispatch = store.dispatch;
 
 // Additional props passed to every screen as this.props.screenProps
 const screenProps = { cable };
