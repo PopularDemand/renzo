@@ -1,7 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
-import { compose, withStateHandlers, withHandlers, withPropsOnChange } from 'recompose';
-import { withGameChannel } from '../../decorators/withGameChannel';
+import { compose, withStateHandlers, withHandlers, withPropsOnChange, lifecycle } from 'recompose';
+import { gameCreate, gameSubscribe } from '../../../store/game/actions';
 import { Rotate } from '../../core/transforms';
 import {
   AidKit,
@@ -27,65 +28,58 @@ const SVGs = [
   SadFace
 ];
 
-const NUM_ICONS = 4;
-
-const randomIcons = (num = NUM_ICONS) => {
-  const icons = [];
-  while (icons.length < num) {
-    const index = Math.floor(Math.random() * SVGs.length);
-    if (icons.includes(index)) continue;
-    icons.push(index);
-  }
-  return icons.map((i) => SVGs[i]);
-};
-
 export const enhance = compose(
-  withGameChannel,
-  withStateHandlers(
-    { icons: randomIcons(), displayedIcon: Math.floor(Math.random() * NUM_ICONS) },
-    {
-      resetIcons: (state, props) => () => ({
-        icons: randomIcons(),
-        displayedIcon: Math.floor(Math.random() * NUM_ICONS)
-      })
-    }
+  connect(
+    ({ game }) => ({ ...game }),
+    { gameCreate, gameSubscribe }
   ),
+  lifecycle({
+    componentDidMount() {
+      this.props.gameCreate({ receiver_id: 1 })
+      .then((game) => console.log('game: ', game))
+    }
+  }),
+  withPropsOnChange(['icons'], (props) => ({ icons: props.icons })),
   withHandlers({
-    handleSelection: (props) => (payload) => {
-      // record the selection, then...
-      props.resetIcons();
+    handleSelection: (props) => async (evt) => {
+      // const selected = evt.target.dataset.index;
+      // await props.gameChannel.makeSelection(icons[selected]);
+      // props.gameChannel.resetIcons();
     }
   })
 );
 
 export function GameScreen({ navigation, icons, displayedIcon, resetIcons }) {
-  const Icon = icons[displayedIcon];
+  // const Icon = icons ? icons[displayedIcon] : null;
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.boardTitle}>
+      <Text>this is a game!</Text>
+    </View>
+  );
+}
+
+/*        <Text style={styles.boardTitle}>
           Select The Displayed Icon
         </Text>
       </View>
       <View style={styles.displayedIcon}>
         <Rotate>
-          <Icon fill="#00f" />
+          {Icon && <Icon fill="#00f" />}
         </Rotate>
       </View>
       <View style={styles.selectGrid}>
-        {icons.map((SVG, i) => (
+        {icons && icons.map((SVG, i) => (
           <TouchableHighlight
             style={styles.selectableIcon}
-            onPress={resetIcons}
+            onPress={handleSelection}
+            data-index={i}
             key={i}
           >
             <View><SVG /></View>
           </TouchableHighlight>
         ))}
       </View>
-    </View>
-  );
-}
+      */
 
 GameScreen.navigationOptions = { title: 'RenZo' };
 
